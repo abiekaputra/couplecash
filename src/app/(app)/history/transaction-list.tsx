@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import { useState, useTransition, useMemo, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
@@ -46,8 +47,18 @@ export function TransactionList({ initial, currentUserId, isAdmin }: Transaction
   const [editTx, setEditTx] = useState<TxWithProfile | null>(null);
   const [deleteTx, setDeleteTx] = useState<TxWithProfile | null>(null);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
   const [txList, setTxList] = useState<TxWithProfile[]>(initial);
   const [deletePending, startDelete] = useTransition();
+
+  const openMenu = useCallback((id: string, btn: HTMLButtonElement) => {
+    const rect = btn.getBoundingClientRect();
+    setMenuPos({
+      top: rect.bottom + 4,
+      right: window.innerWidth - rect.right,
+    });
+    setOpenMenuId(id);
+  }, []);
 
   // Client-side period filter
   const now = new Date();
@@ -188,38 +199,16 @@ export function TransactionList({ initial, currentUserId, isAdmin }: Transaction
                         {tx.type === "income" ? "+" : "-"}{formatIDR(Number(tx.amount))}
                       </p>
                       {/* Menu button */}
-                      <div className="relative">
-                        <button
-                          type="button"
-                          onClick={() => setOpenMenuId(openMenuId === tx.id ? null : tx.id)}
-                          className="p-1 rounded-md text-muted-foreground hover:bg-muted transition"
-                        >
-                          <MoreHorizontal className="size-3.5" />
-                        </button>
-                        {openMenuId === tx.id && (
-                          <>
-                            <div className="fixed inset-0 z-10" onClick={() => setOpenMenuId(null)} />
-                            <div className="absolute right-0 top-7 z-20 w-32 rounded-xl border bg-card shadow-lg overflow-hidden">
-                              <button
-                                type="button"
-                                onClick={() => { setEditTx(tx); setOpenMenuId(null); }}
-                                className="flex w-full items-center gap-2 px-3 py-2.5 text-sm hover:bg-muted transition"
-                              >
-                                <Pencil className="size-3.5 text-muted-foreground" />
-                                Edit
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => { setDeleteTx(tx); setOpenMenuId(null); }}
-                                className="flex w-full items-center gap-2 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 transition"
-                              >
-                                <Trash2 className="size-3.5" />
-                                Delete
-                              </button>
-                            </div>
-                          </>
-                        )}
-                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          if (openMenuId === tx.id) setOpenMenuId(null);
+                          else openMenu(tx.id, e.currentTarget);
+                        }}
+                        className="p-1 rounded-md text-muted-foreground hover:bg-muted transition"
+                      >
+                        <MoreHorizontal className="size-3.5" />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -253,6 +242,43 @@ export function TransactionList({ initial, currentUserId, isAdmin }: Transaction
         destructive
         pending={deletePending}
       />
+
+      {/* Dropdown menu — portal so overflow:hidden on parent card doesn't clip it */}
+      {openMenuId && typeof document !== "undefined" && createPortal(
+        <>
+          <div className="fixed inset-0 z-[150]" onClick={() => setOpenMenuId(null)} />
+          <div
+            className="fixed z-[160] w-36 rounded-xl border bg-card shadow-xl overflow-hidden"
+            style={{ top: menuPos.top, right: menuPos.right }}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                const tx = txList.find(t => t.id === openMenuId);
+                if (tx) setEditTx(tx);
+                setOpenMenuId(null);
+              }}
+              className="flex w-full items-center gap-2 px-3 py-2.5 text-sm hover:bg-muted transition"
+            >
+              <Pencil className="size-3.5 text-muted-foreground" />
+              Edit
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const tx = txList.find(t => t.id === openMenuId);
+                if (tx) setDeleteTx(tx);
+                setOpenMenuId(null);
+              }}
+              className="flex w-full items-center gap-2 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 transition"
+            >
+              <Trash2 className="size-3.5" />
+              Delete
+            </button>
+          </div>
+        </>,
+        document.body,
+      )}
     </>
   );
 }
