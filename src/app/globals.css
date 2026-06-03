@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* CoupleCash brand palette — light mode */
+  --background: #fff8f1; /* cream */
+  --foreground: #1a2238; /* navy */
+  --card: #ffffff;
+  --card-foreground: #1a2238;
+  --primary: #ff8b7b; /* coral */
+  --primary-foreground: #ffffff;
+  --primary-soft: #ffd4d0;
+  --secondary: #7db9de; /* sky blue */
+  --secondary-foreground: #ffffff;
+  --accent: #a8d8b9; /* mint — savings/success */
+  --accent-foreground: #1a2238;
+  --muted: #f5f0eb;
+  --muted-foreground: #6b7280;
+  --border: #ece2d6;
+  --input: #ece2d6;
+  --ring: #ff8b7b;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --radius: 0.875rem;
+}
+
+.dark {
+  --background: #1a2238;
+  --foreground: #fff8f1;
+  --card: #232c47;
+  --card-foreground: #fff8f1;
+  --primary: #ff8b7b;
+  --primary-foreground: #1a2238;
+  --primary-soft: #4a2e2a;
+  --secondary: #7db9de;
+  --secondary-foreground: #1a2238;
+  --accent: #a8d8b9;
+  --accent-foreground: #1a2238;
+  --muted: #2a3454;
+  --muted-foreground: #9ca3af;
+  --border: #2f3a5c;
+  --input: #2f3a5c;
+  --ring: #ff8b7b;
+  --destructive: #f87171;
+  --destructive-foreground: #1a2238;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth theme transition — only fires when .theme-transitioning is active */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition:
+    background-color 0.25s ease,
+    color 0.15s ease,
+    border-color 0.25s ease,
+    fill 0.15s ease !important;
+}
