@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,20 +14,26 @@ interface SheetProps {
 }
 
 export function Sheet({ open, onClose, title, children, className }: SheetProps) {
+  // Track mount state to avoid SSR portal errors
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-[100]">
+  return createPortal(
+    <div className="fixed inset-0 z-[200]">
+      {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
+      {/* Sheet panel */}
       <div
         className={cn(
           "absolute bottom-0 left-0 right-0 rounded-t-2xl bg-background",
@@ -47,6 +54,7 @@ export function Sheet({ open, onClose, title, children, className }: SheetProps)
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
