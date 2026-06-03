@@ -203,10 +203,12 @@ Each day has a clear deliverable you can test before moving on.
   - Autotest via browser preview (15 flows): all passed
   - Verified: balance math, savings deposit/withdraw, role restrictions, delete optimistic, CSV export, error states
 
-- [ ] **Day 29 — Deploy to Vercel** *(waiting for user signal)*
-  - Push to GitHub (private repo)
-  - Connect Vercel, set env vars, deploy
-  - Test production URL with both accounts
+- [x] **Day 29 — Deploy to Vercel** (2026-06-03)
+  - Git init + commit (92 files, 10.581 insertions)
+  - Push ke GitHub: `github.com/abiekaputra/couplecash` (private)
+  - Deploy via Vercel CLI — build pass, 0 TypeScript errors, 36s build time
+  - Production: https://couplecash-swart.vercel.app
+  - Env vars set: SUPABASE_URL, ANON_KEY, SERVICE_ROLE_KEY, APP_URL
 
 - [ ] **Day 30 — Final polish + docs** *(waiting for user signal)*
   - README rewrite for handover

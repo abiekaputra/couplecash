@@ -141,7 +141,10 @@ export function EditSheet({ transaction: tx, isAdmin, open, onClose, onSaved }: 
         {error && (
           <p className="rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</p>
         )}
+      </div>
 
+      {/* Sticky footer — always visible regardless of scroll position */}
+      <div className="sticky bottom-0 bg-background border-t px-4 py-3">
         <button type="button" onClick={handleSave} disabled={pending}
           className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition disabled:opacity-60"
         >
