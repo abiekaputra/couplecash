@@ -30,20 +30,29 @@
   --foreground: #fff8f1;
   --card: #232c47;
   --card-foreground: #fff8f1;
+
+  /* Primary coral — keep dark text on bright coral button */
   --primary: #ff8b7b;
   --primary-foreground: #1a2238;
   --primary-soft: #4a2e2a;
+
+  /* Secondary sky — keep dark text on bright sky button */
   --secondary: #7db9de;
   --secondary-foreground: #1a2238;
-  --accent: #a8d8b9;
-  --accent-foreground: #1a2238;
+
+  /* Accent mint — foreground MUST be light, used as standalone text on dark bg */
+  --accent: #7dc9a0;
+  --accent-foreground: #d4ede0;
+
   --muted: #2a3454;
   --muted-foreground: #9ca3af;
   --border: #2f3a5c;
   --input: #2f3a5c;
   --ring: #ff8b7b;
+
+  /* Destructive red — foreground MUST be light, not dark navy */
   --destructive: #f87171;
-  --destructive-foreground: #1a2238;
+  --destructive-foreground: #ffffff;
 }
 
 @theme inline {
