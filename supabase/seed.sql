@@ -9,8 +9,8 @@
 --   1 saving goal (Rp 10.000.000 placeholder — admin can edit later)
 --
 -- Login from the app:
---   username: abieka  password: 021204  (admin)
---   username: semma   password: 060605
+--   username: abieka  password: changeme  (admin)
+--   username: semma   password: changeme
 --
 -- If this script fails on auth.users/auth.identities (Supabase auth schema
 -- can change between versions), use the FALLBACK at the bottom of this file.
@@ -48,7 +48,7 @@ BEGIN
       'authenticated',
       'authenticated',
       'abieka@couplecash.app',
-      crypt('021204', gen_salt('bf')),
+      crypt('changeme', gen_salt('bf')),
       now(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       '{"username":"abieka"}'::jsonb,
@@ -61,7 +61,7 @@ BEGIN
       'authenticated',
       'authenticated',
       'semma@couplecash.app',
-      crypt('060605', gen_salt('bf')),
+      crypt('changeme', gen_salt('bf')),
       now(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       '{"username":"semma"}'::jsonb,

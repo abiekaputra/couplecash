@@ -34,7 +34,7 @@ You also need **free accounts** on:
 ## 2. Install project dependencies
 
 ```bash
-cd /Users/dev03/Documents/couplecash
+cd couplecash
 pnpm install
 ```
 
@@ -143,4 +143,4 @@ Skip until you're ready to share the app outside localhost.
 
 ## What's next
 
-See `PLAN.md` for the day-by-day roadmap. We're on **Day 1**.
+Once the dev server is running, log in with `abieka` / `changeme` (admin) or `semma` / `changeme` (member), then change the passwords in **Settings**.

@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CoupleCash
+
+A shared personal finance tracker built for two — track income and expenses together, manage a savings goal, set up recurring transactions, and view spending stats. Designed as a Progressive Web App (PWA) so it installs on mobile like a native app.
+
+## Features
+
+- **Dashboard** — combined balance overview with each partner's spending summary
+- **Add Transactions** — income and expense with 7 categories, notes, and date picker
+- **History** — full transaction log with inline edit and delete
+- **Savings Goal** — shared savings tracker with deposit/withdrawal support
+- **Recurring Transactions** — monthly auto-insert on app open (admin-managed)
+- **Stats** — monthly breakdown by category with charts
+- **Two-user system** — Admin and Member roles within a shared couple account
+- **Dark mode** — system-aware with manual toggle
+- **PWA** — installable on Android and iOS, works offline for cached views
+- **CSV Export** — download full transaction history
+
+## Tech Stack
+
+- **Framework** — Next.js 16 (App Router, TypeScript)
+- **Styling** — Tailwind CSS v4
+- **Database & Auth** — Supabase (Postgres + RLS + Auth)
+- **UI Components** — shadcn/ui primitives
+- **Charts** — Recharts
+- **Notifications** — Sonner
+- **PWA** — next-pwa
 
 ## Getting Started
 
-First, run the development server:
+See [SETUP.md](SETUP.md) for the full step-by-step setup guide (Supabase project, env vars, database schema, dev server).
+
+### Quick start (if Supabase is already configured)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.local.example .env.local
+# fill in your Supabase credentials in .env.local
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` and log in with the credentials created by `supabase/seed.sql`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── (app)/              # Authenticated pages: dashboard, add, history, savings, stats, settings
+│   ├── api/export/         # CSV export API route
+│   └── login/              # Login page & server action
+├── components/             # Shared UI components (nav, cards, icons)
+├── features/               # Server actions & service layer per domain
+│   ├── transactions/
+│   ├── savings/
+│   ├── recurring/
+│   └── stats/
+├── lib/supabase/           # Supabase client (browser, server, middleware)
+└── types/                  # Database row types
+supabase/
+├── schema.sql              # Full database schema with RLS policies
+└── seed.sql                # Sample couple + user data for local dev
+```
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
