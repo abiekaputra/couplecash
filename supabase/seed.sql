@@ -128,8 +128,8 @@ END $$;
 -- mismatch on a newer Supabase version), do this instead:
 --
 -- 1. In Supabase dashboard, go to Authentication → Users → Add user.
---    - Email: abieka@couplecash.app   Password: 021204   (auto-confirm)
---    - Email: semma@couplecash.app    Password: 060605   (auto-confirm)
+--    - Email: abieka@couplecash.app   Password: changeme   (auto-confirm)
+--    - Email: semma@couplecash.app    Password: changeme   (auto-confirm)
 -- 2. Copy each user's UUID from the dashboard.
 -- 3. Run the snippet below, replacing <ABIEKA_UUID> and <SEMMA_UUID>.
 -- =============================================================================
